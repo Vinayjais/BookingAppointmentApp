@@ -72,21 +72,42 @@
         </ul>
     </div>
       <script>
-         
+              
       
-         var obj = [];
-
+   
+   
+      
+      
 
          function registeruser(){
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('mail').value;
-            const phone = document.getElementById('teln').value;
-            const date = document.getElementById('date').value;
-            const time = document.getElementById('time').value;
-            
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('mail').value;
+            var phone = document.getElementById('teln').value;
+            var date = document.getElementById('date').value;
+            var time = document.getElementById('time').value;
+
+            //-------------------------------
+            var  myObjArr = [];
+
+let myobj = {
+           Name : name,
+           Email : email,
+           Phome : phone,
+           Date : date,
+           Time : time,
+        
+
+      };
+      myObjArr.push(myobj);
+      myObjArr.push(JSON.parse(localStorage.getItem('myObjArr')));
+      console.log(myObjArr);
+      localStorage.setItem("myObjArr",JSON.stringify(myObjArr));
+
+            //------------------------           
             var liEle = document.getElementById('items');
             var li = document.createElement('li');
             li.appendChild(document.createTextNode(name));
+        
             li.appendChild(document.createTextNode(" "));
             li.appendChild(document.createTextNode(email));
             li.appendChild(document.createTextNode(" "));
@@ -96,24 +117,58 @@
             li.appendChild(document.createTextNode(" "));
             li.appendChild(document.createTextNode(time));
             li.appendChild(document.createTextNode(" "));
+
+            //  delete button
             var btnn = document.createElement('button');
-              
-            btnn.appendChild(document.createTextNode('Delete'));
-        
             btnn.className ="btn btn-danger";
+            btnn.appendChild(document.createTextNode('Delete'));
             li.appendChild(btnn);
-
-
-            liEle.appendChild(li);
+           
             
-             addNewObj(name,email,phone,date,time);
+            li.appendChild(document.createTextNode(" "));
+            // Edit button
+            var edit =document.createElement('button');
+            edit.className ="btn btn-primary";
+            edit.appendChild(document.createTextNode('Edit'));
+            li.appendChild(edit);
+          
+           
+  // appending li ele to ul---------------
+            liEle.appendChild(li);           
+            
+  //      remove element  function
 
              btnn.addEventListener('click',removeEle);
+
              function removeEle(){
                 liEle.removeChild(li);
-                
+                localStorage.removeItem(myobj);
                 
              }
+
+             edit.addEventListener('click', editUser);
+
+             function editUser(){
+               
+               
+
+            
+               
+                document.getElementById('name').value = myobj.Name;
+                document.getElementById('mail').value = myobj.Email;
+                document.getElementById('teln').value = myobj.Phome;
+                document.getElementById('date').value = myobj.Date;
+                document.getElementById('time').value = myobj.Time;
+
+                liEle.removeChild(li);
+
+                localStorage.removeItem(myobj);
+
+
+
+             }
+
+
               
         
              
@@ -121,30 +176,9 @@
                  
             
          }
-         
-       function addNewObj(name,email,phone,date,time){
-      
-       var  myObjArr = [];
 
-     let myobj = {
-                Name : name,
-                Email : email,
-                Phome : phone,
-                Date : date,
-                Time : time,
-             
 
-           };
-           myObjArr.push(myobj);
-           myObjArr.push(JSON.parse(localStorage.getItem('myObjArr')));
-           console.log(myObjArr);
-           localStorage.setItem("myObjArr",JSON.stringify(myObjArr));
-
- 
-
-    }
-    
-    
+     
 
       </script>
 </body>
